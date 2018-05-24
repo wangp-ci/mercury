@@ -2,7 +2,9 @@
 set -eux
 prefix=$1
 tarball=$2
-if [[ -d "$prefix" ]] ; then
+# XXX change version
+if "$prefix/bin/mmc" --version | grep rotd-2018-05-23
+then
     exit
 fi
 test -f "$tarball" || wget "http://dl.mercurylang.org/rotd/$tarball"
