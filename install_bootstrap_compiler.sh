@@ -8,8 +8,7 @@ if [[ -x "$prefix/bin/mmc" ]] && "$prefix/bin/mmc" --version | grep -F "version 
 then
     exit
 fi
-test -f "$tarball" || wget "http://dl.mercurylang.org/rotd/$tarball"
-tar xf "$tarball"
+curl -L "http://dl.mercurylang.org/rotd/$tarball" | tar xz
 cd "$basename"
 ./configure --prefix="$prefix" --with-default-grade=hlc.gc --enable-libgrades=hlc.gc
 make PARALLEL=-j2 install
