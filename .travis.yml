@@ -14,8 +14,10 @@ install:
   - ./install_bootstrap_compiler.sh "$HOME/mercury-bootstrap" mercury-srcdist-rotd-2018-05-23.tar.gz
 
 env:
-  - PATH="$PATH:$HOME/mercury-bootstrap"
+  - PATH="$PATH:$HOME/mercury-bootstrap/bin"
 
 script:
-  - ./configure --prefix="$HOME/mercury-test" --enable-libgrades=hlc.gc
-  - make
+  - ./prepare.sh
+  - ./configure --prefix="$HOME/mercury-test" --with-default-grade=hlc.gc --enable-libgrades=hlc.gc
+  - mmake
+  - ./tools/bootcheck -G hlc.gc
