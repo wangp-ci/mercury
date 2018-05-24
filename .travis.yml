@@ -6,13 +6,13 @@ os:
 compiler:
   - gcc
 
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - bison
-      - flex
+# addons:
+#   apt:
+#     sources:
+#       - ubuntu-toolchain-r-test
+#     packages:
+#       - bison
+#       - flex
 
 cache:
   ccache: true
