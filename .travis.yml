@@ -1,25 +1,32 @@
 language: c
 
-cache: ccache
-
 os:
   - linux
 
 compiler:
   - gcc
 
-before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -y bison flex
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - bison
+      - flex
+
+cache:
+  ccache: true
+  directories:
+    - $HOME/mercury-bootstrap
 
 install:
   - ./install_bootstrap_compiler.sh "$HOME/mercury-bootstrap" mercury-srcdist-rotd-2018-05-23.tar.gz
 
 env:
-  - PATH="/usr/bin/ccache:$PATH:$HOME/mercury-bootstrap/bin"
+  - PATH="$PATH:$HOME/mercury-bootstrap/bin"
 
 script:
   - ./prepare.sh
   - ./configure --prefix="$HOME/mercury-test" --with-default-grade=hlc.gc --enable-libgrades=hlc.gc
-  - mmake
-  - ./tools/bootcheck -G hlc.gc
+  - mmake -j2
+# - ./tools/bootcheck -G hlc.gc -j2
