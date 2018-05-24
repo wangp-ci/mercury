@@ -1,3 +1,7 @@
+# Use new container infrastructure to enable caching
+sudo: false
+
+# could try language: generic
 language: c
 
 os:
@@ -5,6 +9,11 @@ os:
 
 compiler:
   - gcc
+
+cache:
+  ccache: true
+  directories:
+    - $HOME/mercury-bootstrap
 
 # addons:
 #   apt:
@@ -14,19 +23,16 @@ compiler:
 #       - bison
 #       - flex
 
-cache:
-  ccache: true
-  directories:
-    - $HOME/mercury-bootstrap
-
 install:
   - ./install_bootstrap_compiler.sh "$HOME/mercury-bootstrap" mercury-srcdist-rotd-2018-05-23.tar.gz
 
 env:
   - PATH="$PATH:$HOME/mercury-bootstrap/bin"
 
-script:
+before_script:
   - ./prepare.sh
   - ./configure --prefix="$HOME/mercury-test" --with-default-grade=hlc.gc --enable-libgrades=hlc.gc
+
+script:
   - mmake -j2
 # - ./tools/bootcheck -G hlc.gc -j2
