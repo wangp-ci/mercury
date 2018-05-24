@@ -1,5 +1,7 @@
 language: c
 
+cache: ccache
+
 os:
   - linux
 
@@ -14,7 +16,7 @@ install:
   - ./install_bootstrap_compiler.sh "$HOME/mercury-bootstrap" mercury-srcdist-rotd-2018-05-23.tar.gz
 
 env:
-  - PATH="$PATH:$HOME/mercury-bootstrap/bin"
+  - PATH="/usr/bin/ccache:$PATH:$HOME/mercury-bootstrap/bin"
 
 script:
   - ./prepare.sh
