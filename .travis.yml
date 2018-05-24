@@ -35,4 +35,4 @@ before_script:
 
 script:
   - mmake -j2
-# - ./tools/bootcheck -G hlc.gc -j2
+  - ./tools/bootcheck -G hlc.gc -j2
